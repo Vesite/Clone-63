@@ -1,4 +1,4 @@
-﻿namespace BreakoutC3172
+﻿namespace BreakoutC3172.SystemsCore
 {
     internal class UtilityFunctions
     {
@@ -45,9 +45,14 @@
 
         }
 
-        public static Vector2 ConvertRadiansToVector2(float direction)
+        public static Vector2 ConvertRadiansToUnitVector(float direction)
         {
             return new Vector2((float)Math.Cos(direction), (float)Math.Sin(direction));
+        }
+
+        public static float ConvertUnitVectorToRadians(Vector2 vector)
+        {
+            return -(float)Math.Atan2(vector.Y, vector.X);
         }
 
         public static void SetFullscreen(bool setFullscreen)
@@ -108,6 +113,37 @@
             Game1._graphics.PreferredBackBufferWidth = (int)(Globals.WindowSize.X * Globals._gameScale);
             Game1._graphics.PreferredBackBufferHeight = (int)(Globals.WindowSize.Y * Globals._gameScale);
             Game1._graphics.ApplyChanges();
+        }
+
+        public static float Approach(float a, float b, float amount)
+        {
+            if (a == b)
+            {
+                return b;
+            }
+            else if (Math.Abs(b - a) <= amount)
+            {
+                return b;
+            }
+            else
+            {
+                return a + Math.Sign(b - a) * amount;
+            }
+        }
+
+        public static string VectorToString(Vector2 vector)
+        {
+            return "(" + (float)Math.Round(vector.X, 2) + ", " + (float)Math.Round(vector.Y, 2) + ")";
+        }
+
+        public static bool IsPositive(float value)
+        {
+            return (value > 0);
+        }
+
+        public static float RadiansToDegrees(float radians)
+        {
+            return radians * (180f / (float)Math.PI);
         }
 
     }

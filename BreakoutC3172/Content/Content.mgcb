@@ -289,6 +289,13 @@
 /processorParam:TextureFormat=Color
 /build:hero.png
 
+#begin ui_font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:ui_font.spritefont
+
 #begin ui_left.png
 /importer:TextureImporter
 /processor:TextureProcessor

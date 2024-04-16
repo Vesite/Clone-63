@@ -1,7 +1,14 @@
 ﻿using BreakoutC3172.Objects.Blocks;
+using BreakoutC3172.SystemsCore;
+using System.Diagnostics;
 
 namespace BreakoutC3172.Objects
 {
+
+    // TODO, im trying to add some random change in the direction when colliding
+    // But im getting wrong behavior when I think I do it correct, atm it works perfectly but my code don't make sense
+    // And I would not expect it to work...
+
     internal class Ball : GameObject
     {
         public float radius;
@@ -11,6 +18,8 @@ namespace BreakoutC3172.Objects
         private float rotation;
         private float rotation_speed;
         private Vector2 velocity;
+
+        private SpriteFont UIFont { get; }
 
         private Random random = new();
 
@@ -23,6 +32,8 @@ namespace BreakoutC3172.Objects
 
             rotation = (float)(random.NextDouble() * 2 * Math.PI);
             NewRotationSpeed();
+
+            UIFont = Globals.Content.Load<SpriteFont>("ui_font");
 
         }
 
@@ -45,7 +56,12 @@ namespace BreakoutC3172.Objects
             Globals.SpriteBatch.Draw(textures[0], Position, null, Color.White,
                                      rotation, new Vector2(textures[0].Width / 2, textures[0].Height / 2), scale, SpriteEffects.None, 0f);
             if (Globals.IsDrawingOutline)
+            {
                 UtilityFunctions.DrawOutline(Rectangle);
+                // Debug Text
+                Globals.SpriteBatch.DrawString(UIFont, UtilityFunctions.VectorToString(direction), Position, Color.White);
+            }
+
         }
 
         private void NewRotationSpeed()
@@ -68,27 +84,80 @@ namespace BreakoutC3172.Objects
 
             if (nextPosition.X < 0f + radius) // Collide with left wall
             {
-                nextPosition.X = 0f + radius;
-                direction.X = -direction.X;
+                nextPosition.X = 0f + radius + 1;
+
+                // Flip the direction and change it a little randomly
+                var radians = UtilityFunctions.ConvertUnitVectorToRadians(direction);
+                radians = radians + (float)Math.PI;
+                if (UtilityFunctions.IsPositive(direction.Y))
+                {
+                    radians += (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+                }
+                else
+                {
+                    radians -= (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+                }
+                direction = UtilityFunctions.ConvertRadiansToUnitVector(radians);
+
                 NewRotationSpeed();
             }
             else if (nextPosition.X > width - 5 * 32 - radius) // Collide with right wall
             {
-                nextPosition.X = width - 5 * 32 - radius;
-                direction.X = -direction.X;
+                nextPosition.X = width - 5 * 32 - radius - 1;
+
+                // Flip the direction and change it a little randomly
+                var radians = UtilityFunctions.ConvertUnitVectorToRadians(direction);
+                radians = radians + (float)Math.PI;
+                if (UtilityFunctions.IsPositive(direction.Y))
+                {
+                    radians -= (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+                }
+                else
+                {
+                    radians += (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+                }
+                direction = UtilityFunctions.ConvertRadiansToUnitVector(radians);
+
                 NewRotationSpeed();
             }
 
             if (nextPosition.Y < 0f + radius) // Collide with top wall
             {
-                nextPosition.Y = 0f + radius;
-                direction.Y = -direction.Y;
+                nextPosition.Y = 0f + radius + 1;
+
+                // Flip the direction and change it a little randomly
+                //direction.Y = -direction.Y;
+                var radians = UtilityFunctions.ConvertUnitVectorToRadians(direction);
+                if (UtilityFunctions.IsPositive(direction.X))
+                {
+                    radians -= (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+                }
+                else
+                {
+                    radians += (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+                }
+                direction = UtilityFunctions.ConvertRadiansToUnitVector(radians);
+
                 NewRotationSpeed();
             }
             else if (nextPosition.Y > height - radius) // Collide with bottom wall
             {
-                nextPosition.Y = height - radius;
-                direction.Y = -direction.Y;
+                nextPosition.Y = height - radius - 1;
+
+                // Flip the direction and change it a little randomly
+                //direction.Y = -direction.Y;
+                var radians = UtilityFunctions.ConvertUnitVectorToRadians(direction);
+                if (UtilityFunctions.IsPositive(direction.X))
+                {
+                    radians += (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+                }
+                else
+                {
+                    radians -= (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+                }
+                Debug.WriteLine("d2: " + UtilityFunctions.RadiansToDegrees(radians));
+                direction = UtilityFunctions.ConvertRadiansToUnitVector(radians);
+
                 NewRotationSpeed();
             }
 
@@ -152,6 +221,25 @@ namespace BreakoutC3172.Objects
 
             Position = nextPosition;
 
+        }
+
+        private static Vector2 UpdateDirectionColLeft(Vector2 startDir)
+        {
+            // Flip the direction and change it a little randomly
+            startDir.X = -startDir.X;
+            var radians = UtilityFunctions.ConvertUnitVectorToRadians(startDir);
+
+            //radians = radians + (float)Math.PI;
+            if (UtilityFunctions.IsPositive(startDir.Y))
+            {
+                radians += (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+            }
+            else
+            {
+                radians -= (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+            }
+            var endDir = UtilityFunctions.ConvertRadiansToUnitVector(radians);
+            return endDir;
         }
     }
 }

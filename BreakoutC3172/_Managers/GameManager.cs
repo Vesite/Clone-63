@@ -1,4 +1,6 @@
 using BreakoutC3172.ScenesFolder;
+using BreakoutC3172.SystemsCore;
+using System.Diagnostics;
 
 namespace BreakoutC3172
 {
@@ -10,6 +12,16 @@ namespace BreakoutC3172
         public GameManager()
         {
             _sceneManager = new(this);
+
+            //DEBUG
+            var radians = (float)Math.PI;
+            var unitVec = UtilityFunctions.ConvertRadiansToUnitVector(radians);
+            var radians2 = UtilityFunctions.ConvertUnitVectorToRadians(unitVec);
+            Debug.WriteLine(radians);
+            Debug.WriteLine(unitVec);
+            Debug.WriteLine(radians2);
+            //Debug.WriteLine(UtilityFunctions.IsPositive(2));
+            //Debug.WriteLine(UtilityFunctions.IsPositive(-2));
         }
 
         public void Update()

@@ -1,4 +1,6 @@
-﻿namespace BreakoutC3172.Objects.Blocks
+﻿using BreakoutC3172.SystemsCore;
+
+namespace BreakoutC3172.Objects.Blocks
 {
     internal abstract class BlockObject : GameObject
     {

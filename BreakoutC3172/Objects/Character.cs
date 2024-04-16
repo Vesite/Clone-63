@@ -1,3 +1,5 @@
+using BreakoutC3172.SystemsCore;
+
 namespace BreakoutC3172.Objects
 {
     internal class Character : GameObject

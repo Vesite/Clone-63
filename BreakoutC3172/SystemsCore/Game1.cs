@@ -1,4 +1,4 @@
-namespace BreakoutC3172
+namespace BreakoutC3172.SystemsCore
 {
     public class Game1 : Game
     {

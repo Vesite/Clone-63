@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework.Content;
 
-namespace BreakoutC3172
+namespace BreakoutC3172.SystemsCore
 {
     public static class Globals
     {
@@ -12,7 +12,7 @@ namespace BreakoutC3172
         public static Random RandomGenerator { get; } = new Random();
 
         // Screen Window Stuff
-        public static float AspectRatio = (16f / 9f);
+        public static float AspectRatio = 16f / 9f;
         public static Point WindowSize { get; } = new(640, (int)(640 / AspectRatio));
         public static float _gameScale;
         public static float _gameScaleMax = 1f;
@@ -29,7 +29,7 @@ namespace BreakoutC3172
 
         public static void Load()
         {
-            PixelTexture = new Texture2D(Globals.GraphicsDevice, 1, 1);
+            PixelTexture = new Texture2D(GraphicsDevice, 1, 1);
             PixelTexture.SetData(new Color[] { Color.White });
         }
 
@@ -37,5 +37,7 @@ namespace BreakoutC3172
         {
             Time = (float)gt.ElapsedGameTime.TotalSeconds;
         }
+
+
     }
 }
