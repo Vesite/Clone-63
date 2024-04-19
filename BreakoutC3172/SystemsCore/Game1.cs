@@ -33,7 +33,7 @@ namespace BreakoutC3172.SystemsCore
             Globals._gameScaleMax = Math.Max(maxHeightScale, maxWidthScale);
             Globals._gameScalePrefered = Globals._gameScaleMax;
 
-            UtilityFunctions.SetFullscreen(false);
+            UtilityFunctions.SetWindowState(this, UtilityFunctions.WindowState.Windowed);
 
             base.Initialize();
         }
@@ -46,13 +46,11 @@ namespace BreakoutC3172.SystemsCore
 
             Globals.Load();
 
-            _gameManager = new();
+            _gameManager = new(this);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
 
             Globals.Update(gameTime);
             InputManager.Update();

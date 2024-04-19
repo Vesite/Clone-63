@@ -6,6 +6,7 @@ namespace BreakoutC3172.SystemsCore
     {
         // Ect
         public static float Time { get; private set; }
+        public static bool Paused;
         public static ContentManager Content { get; set; }
         public static SpriteBatch SpriteBatch { get; set; }
         public static GraphicsDevice GraphicsDevice { get; set; }

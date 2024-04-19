@@ -55,12 +55,38 @@
             return -(float)Math.Atan2(vector.Y, vector.X);
         }
 
-        public static void SetFullscreen(bool setFullscreen)
+        #region Window Size Stuff
+
+        public enum WindowState
         {
+            Windowed,
+            FullScreen,
+            //Borderless
+        }
 
-            Game1._graphics.IsFullScreen = setFullscreen;
+        // Fullscreen or borderless will take the whole monitor
+        // Windowed will always be a bit smaller than the monitor
+        public static void SetWindowState(Game game, WindowState state)
+        {
+            switch (state)
+            {
+                case WindowState.Windowed:
+                    //game.Window.IsBorderless = false;
+                    Game1._graphics.IsFullScreen = false;
+                    break;
+                case WindowState.FullScreen:
+                    //game.Window.IsBorderless = false;
+                    Game1._graphics.IsFullScreen = true;
+                    break;
+                //case WindowState.Borderless:
+                //    game.Window.IsBorderless = true;
+                //    Game1._graphics.IsFullScreen = true;
+                //    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
 
-            if (Game1._graphics.IsFullScreen == true)
+            if (state == WindowState.FullScreen) //|| state == WindowState.Borderless
             {
                 // Fit the game to the screen using AspectRatio, Black Letterbox
                 if (Globals.screen.AspectRatio < Globals.AspectRatio)
@@ -87,13 +113,14 @@
                 Globals._gameScale = Globals._gameScalePrefered;
             }
 
-            SetWindowSize();
+            SetResolution();
+
         }
 
-        // Will only work with no fullscreen
-        public static void ToggleScreenScale()
+        // Will only work with no fullscreen & borderless
+        public static void ToggleScreenScale(Game game)
         {
-            if (Game1._graphics.IsFullScreen == false)
+            if (Game1._graphics.IsFullScreen == false) // && game.Window.IsBorderless == false
             {
                 Globals._gameScalePrefered += 1;
                 if (Globals._gameScalePrefered > Globals._gameScaleMax)
@@ -104,16 +131,18 @@
                 Globals._gameScale = Globals._gameScalePrefered;
             }
 
-            SetWindowSize();
+            SetResolution();
         }
 
-        private static void SetWindowSize()
+        private static void SetResolution()
         {
             // Sets game window size in pixels
             Game1._graphics.PreferredBackBufferWidth = (int)(Globals.WindowSize.X * Globals._gameScale);
             Game1._graphics.PreferredBackBufferHeight = (int)(Globals.WindowSize.Y * Globals._gameScale);
             Game1._graphics.ApplyChanges();
         }
+
+        #endregion
 
         public static float Approach(float a, float b, float amount)
         {

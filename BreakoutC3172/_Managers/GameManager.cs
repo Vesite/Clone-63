@@ -1,3 +1,4 @@
+using BreakoutC3172._Managers;
 using BreakoutC3172.ScenesFolder;
 using BreakoutC3172.SystemsCore;
 using System.Diagnostics;
@@ -8,12 +9,17 @@ namespace BreakoutC3172
     {
 
         private readonly SceneManager _sceneManager;
+        private PauseManager _pauseManager;
+        private readonly Game _game;
 
-        public GameManager()
+        public GameManager(Game game)
         {
+            _game = game;
             _sceneManager = new(this);
+            _pauseManager = new();
 
-            //DEBUG
+            #region DEBUG TESTING
+
             var radians = (float)Math.PI;
             var unitVec = UtilityFunctions.ConvertRadiansToUnitVector(radians);
             var radians2 = UtilityFunctions.ConvertUnitVectorToRadians(unitVec);
@@ -22,23 +28,48 @@ namespace BreakoutC3172
             Debug.WriteLine(radians2);
             //Debug.WriteLine(UtilityFunctions.IsPositive(2));
             //Debug.WriteLine(UtilityFunctions.IsPositive(-2));
+
+            #endregion 
         }
 
         public void Update()
         {
-            // Swap Between Scenes
-            if (InputManager.KeyClicked(Keys.F1)) { _sceneManager.SwitchScene(Scenes.SceneMenu1); }
-            if (InputManager.KeyClicked(Keys.F2)) { _sceneManager.SwitchScene(Scenes.SceneRoom1); }
-            if (InputManager.KeyClicked(Keys.F3)) { _sceneManager.SwitchScene(Scenes.SceneRoom2); }
 
-            // Screen Settings
-            if (InputManager.KeyClicked(Keys.F5)) { UtilityFunctions.SetFullscreen(!Game1._graphics.IsFullScreen); }
-            if (InputManager.KeyClicked(Keys.F6)) { UtilityFunctions.ToggleScreenScale(); }
+            // Pause
+            if (InputManager.KeyClicked(Keys.Escape)) { Globals.Paused = !Globals.Paused; }
+
+            _pauseManager.Update();
+
+            // Fullscreen
+            if (InputManager.KeyClicked(Keys.F5))
+            {
+                if (!Game1._graphics.IsFullScreen) { UtilityFunctions.SetWindowState(_game, UtilityFunctions.WindowState.FullScreen); }
+                else { UtilityFunctions.SetWindowState(_game, UtilityFunctions.WindowState.Windowed); }
+            }
+            // Borderless
+            //if (InputManager.KeyClicked(Keys.F6))
+            //{
+            //    if (!_game.Window.IsBorderless) { UtilityFunctions.SetWindowState(_game, UtilityFunctions.WindowState.Borderless); }
+            //    else { UtilityFunctions.SetWindowState(_game, UtilityFunctions.WindowState.Windowed); }
+            //}
+
+            // Toggle Size
+            if (InputManager.KeyClicked(Keys.F8)) { UtilityFunctions.ToggleScreenScale(_game); }
 
             if (InputManager.KeyClicked(Keys.H)) { Globals.IsDrawingOutline = !Globals.IsDrawingOutline; }
 
-            // Update Current Scene 
-            _sceneManager.Update();
+
+            if (!Globals.Paused)
+            {
+                // Swap Between Scenes
+                if (InputManager.KeyClicked(Keys.F1)) { _sceneManager.SwitchScene(Scenes.SceneMenu1); }
+                if (InputManager.KeyClicked(Keys.F2)) { _sceneManager.SwitchScene(Scenes.SceneRoom1); }
+                if (InputManager.KeyClicked(Keys.F3)) { _sceneManager.SwitchScene(Scenes.SceneRoom2); }
+
+                // Update Current Scene
+                _sceneManager.Update();
+            }
+
         }
 
         public void Draw(Matrix transform)
@@ -48,7 +79,13 @@ namespace BreakoutC3172
 
             Globals.SpriteBatch.Begin(transformMatrix: transform, samplerState: SamplerState.PointClamp);
 
+            // Draw In-Game
             Globals.SpriteBatch.Draw(frame, Vector2.Zero, Color.White);
+
+            if (Globals.Paused)
+            {
+                _pauseManager.Draw();
+            }
 
             Globals.SpriteBatch.End();
         }

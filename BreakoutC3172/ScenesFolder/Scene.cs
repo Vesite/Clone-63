@@ -7,16 +7,20 @@ namespace BreakoutC3172.ScenesFolder
     internal abstract class Scene
     {
         protected readonly RenderTarget2D target;
-        protected readonly GameManager gameManager;
+        //protected readonly GameManager gameManager;
 
         protected List<GameObject> gameObjects = new();
         protected List<int> indicesToRemove = new();
 
         private Texture2D ui_overlay;
 
+        // Make a list of UI Objects and render it after the gameObjects List?
+        // This would be for In-Game UI Elements
+
+
         public Scene(GameManager gameManager)
         {
-            this.gameManager = gameManager;
+            //this.gameManager = gameManager;
             target = UtilityFunctions.GetNewRenderTarget();
             Load();
         }
@@ -60,8 +64,6 @@ namespace BreakoutC3172.ScenesFolder
             Globals.SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
             Draw();
-
-
 
             Globals.SpriteBatch.End();
 
