@@ -7,7 +7,8 @@ namespace BreakoutC3172.ScenesFolder
     internal abstract class Scene
     {
         protected readonly RenderTarget2D target;
-        //protected readonly GameManager gameManager;
+        protected readonly GameManager gameManager;
+        protected readonly SceneManager sceneManager;
 
         protected List<GameObject> gameObjects = new();
         protected List<int> indicesToRemove = new();
@@ -18,11 +19,14 @@ namespace BreakoutC3172.ScenesFolder
         // This would be for In-Game UI Elements
 
 
-        public Scene(GameManager gameManager)
+        public Scene(GameManager gameManager, SceneManager sceneManager)
         {
-            //this.gameManager = gameManager;
+            this.gameManager = gameManager;
+            this.sceneManager = sceneManager;
+
             target = UtilityFunctions.GetNewRenderTarget();
             Load();
+
         }
 
         protected virtual void Load()

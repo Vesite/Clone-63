@@ -26,7 +26,7 @@ namespace BreakoutC3172.ScenesFolder
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
 
-        public SceneRoom1(GameManager gameManager) : base(gameManager)
+        public SceneRoom1(GameManager gameManager, SceneManager sceneManager) : base(gameManager, sceneManager)
         {
 
         }
@@ -56,7 +56,7 @@ namespace BreakoutC3172.ScenesFolder
 
             float radius = 11f;
             Vector2 direction = UtilityFunctions.ConvertRadiansToUnitVector((float)(Globals.RandomGenerator.NextDouble() * (Math.PI * 2)));
-            float speed = 200f;
+            float speed = 300f;
             gameObjects.Add(new Ball(new() { ball }, new(400, 450), 1, radius, direction, speed));
 
             SpawnBlocks(tiles, blockDirt, blockStone, blockMetal, breakTexture);

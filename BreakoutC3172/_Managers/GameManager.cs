@@ -16,7 +16,7 @@ namespace BreakoutC3172
         {
             _game = game;
             _sceneManager = new(this);
-            _pauseManager = new();
+            _pauseManager = new(_sceneManager);
 
             #region DEBUG TESTING
 
@@ -88,6 +88,11 @@ namespace BreakoutC3172
             }
 
             Globals.SpriteBatch.End();
+        }
+
+        public void Exit()
+        {
+            _game.Exit();
         }
     }
 }
