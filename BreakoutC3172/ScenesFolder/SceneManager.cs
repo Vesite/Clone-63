@@ -10,6 +10,7 @@
             _scenes.Add(Scenes.SceneMenu1, new SceneMenu1(gameManager, this));
             _scenes.Add(Scenes.SceneRoom1, new SceneRoom1(gameManager, this));
             _scenes.Add(Scenes.SceneRoom2, new SceneRoom2(gameManager, this));
+            _scenes.Add(Scenes.SceneRoom3, new SceneRoom3(gameManager, this));
 
             ActiveScene = Scenes.SceneMenu1;
             _scenes[ActiveScene].Activate();

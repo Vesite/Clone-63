@@ -2,11 +2,11 @@
 
 namespace BreakoutC3172.Objects
 {
-    internal class Board : GameObject
+    public class Board : GameObject
     {
-        private float acc = 12;
-        private float max_speed = 3.5f;
-        private Vector2 velocity;
+        public float acc = 20;
+        public float maxSpeed = 6f;
+        public Vector2 velocity;
 
         public Board(List<Texture2D> textures, Vector2 position, float scale) : base(textures, position, scale)
         {
@@ -18,16 +18,21 @@ namespace BreakoutC3172.Objects
 
             UpdateVelocity();
 
-            Position = new(Position.X + velocity.X, Position.Y + velocity.Y);
+            Vector2 nextPosition = Position + velocity;
+            var w = Rectangle.Width;
+            if (nextPosition.X < 0f + w / 2) // Collide with left wall
+            {
+                // Move us flush to the left wall and then add counce (flip velocity)?
+                Position = new(0f + w / 2, Position.Y);
+                velocity = new(0, velocity.Y);
+            }
+            else if (nextPosition.X > Globals.WindowSize.X - 5 * 32 - w / 2) // Collide with right wall
+            {
+                Position = new(Globals.WindowSize.X - 5 * 32 - w / 2, Position.Y);
+                velocity = new(0, velocity.Y);
+            }
 
-            //if (InputManager.KeyDown(Keys.Down))
-            //{
-            //    Position = new(Position.X, Position.Y + speed * Globals.Time);
-            //}
-            //if (InputManager.KeyDown(Keys.Up))
-            //{
-            //    Position = new(Position.X, Position.Y - speed * Globals.Time);
-            //}
+            Position = Position + velocity;
 
         }
 
@@ -42,42 +47,51 @@ namespace BreakoutC3172.Objects
             {
                 var newAcc = acc;
                 // If positive speed
-                if (velocity.X > 0)
+                if (UtilityFunctions.IsPositive(velocity.X))
                 {
-                    //velocity = new(0, velocity.Y);
                     newAcc = acc * 6;
                 }
+                else if (velocity.X < -(maxSpeed * 0.5f))
+                {
+                    // Accelerate less when we are going fast
+                    newAcc = acc * 0.3f;
+                }
+
                 velocity = new(velocity.X - newAcc * Globals.Time, velocity.Y);
+
             }
             if (InputManager.KeyDown(Keys.Right))
             {
                 var newAcc = acc;
                 // If negative speed
-                if (velocity.X < 0)
+                if (!UtilityFunctions.IsPositive(velocity.X))
                 {
-                    //velocity = new(0, velocity.Y);
                     newAcc = acc * 6;
                 }
+                else if (velocity.X > maxSpeed * 0.5f)
+                {
+                    // Accelerate less when we are going fast
+                    newAcc = acc * 0.3f;
+                }
+
                 velocity = new(velocity.X + newAcc * Globals.Time, velocity.Y);
+
             }
 
-            // Constant friction to make it possible to accelerate for long with diminishing returns.
-            //velocity = new(velocity.X * 0.9f, velocity.Y);
-
+            // Stop when not clicking
             if (!InputManager.KeyDown(Keys.Right) && !InputManager.KeyDown(Keys.Left))
             {
-                // Add resistance
                 velocity = new(UtilityFunctions.Approach(velocity.X, 0, acc * Globals.Time), velocity.Y);
             }
 
             // Make Max speed
-            if (velocity.X > max_speed)
+            if (velocity.X > maxSpeed)
             {
-                velocity.X = max_speed;
+                velocity.X = maxSpeed;
             }
-            if (velocity.X < -max_speed)
+            if (velocity.X < -maxSpeed)
             {
-                velocity.X = -max_speed;
+                velocity.X = -maxSpeed;
             }
 
         }

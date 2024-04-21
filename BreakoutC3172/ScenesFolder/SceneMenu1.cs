@@ -22,7 +22,6 @@ namespace BreakoutC3172.ScenesFolder
 
         }
 
-
         public override void Activate()
         {
             gameObjects.Clear();
@@ -38,7 +37,10 @@ namespace BreakoutC3172.ScenesFolder
             button = UIManager.AddButton(new(Globals.WindowSize.X / 2, Globals.WindowSize.Y * 0.4f), "Stage 2", 1, w, h);
             button.OnClick += Action2;
 
-            button = UIManager.AddButton(new(Globals.WindowSize.X / 2, Globals.WindowSize.Y * 0.6f), "Exit Game", 1, w, h);
+            button = UIManager.AddButton(new(Globals.WindowSize.X / 2, Globals.WindowSize.Y * 0.6f), "Stage 3", 1, w, h);
+            button.OnClick += Action3;
+
+            button = UIManager.AddButton(new(Globals.WindowSize.X / 2, Globals.WindowSize.Y * 0.8f), "Exit Game", 1, w, h);
             button.OnClick += ActionExit;
         }
 
@@ -56,7 +58,6 @@ namespace BreakoutC3172.ScenesFolder
         }
 
 
-
         public void Action1(object sender, EventArgs e)
         {
             sceneManager.SwitchScene(Scenes.SceneRoom1);
@@ -64,6 +65,10 @@ namespace BreakoutC3172.ScenesFolder
         public void Action2(object sender, EventArgs e)
         {
             sceneManager.SwitchScene(Scenes.SceneRoom2);
+        }
+        public void Action3(object sender, EventArgs e)
+        {
+            sceneManager.SwitchScene(Scenes.SceneRoom3);
         }
         public void ActionExit(object sender, EventArgs e)
         {

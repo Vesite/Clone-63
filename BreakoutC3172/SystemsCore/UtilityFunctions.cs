@@ -45,14 +45,23 @@
 
         }
 
-        public static Vector2 ConvertRadiansToUnitVector(float direction)
+        public static Vector2 ConvertRadiansToHeadingVector(float radians)
         {
-            return new Vector2((float)Math.Cos(direction), (float)Math.Sin(direction));
+            var newVec = new Vector2((float)Math.Cos(radians), (float)Math.Sin(radians));
+
+            // Gotta flip the Y here for in-game coordinates to make sense
+            newVec.Y = -newVec.Y;
+
+            return newVec;
         }
 
-        public static float ConvertUnitVectorToRadians(Vector2 vector)
+        public static float ConvertHeadingVectorToRadians(Vector2 vector)
         {
-            return -(float)Math.Atan2(vector.Y, vector.X);
+            // Gotta flip they Y here for in-game coordinates to make sense
+            vector.Y = -vector.Y;
+
+            // This always gives a value between -PI and PI (i think?)
+            return (float)Math.Atan2(vector.Y, vector.X);
         }
 
         #region Window Size Stuff

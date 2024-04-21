@@ -5,5 +5,6 @@
         SceneMenu1,
         SceneRoom1,
         SceneRoom2,
+        SceneRoom3,
     }
 }

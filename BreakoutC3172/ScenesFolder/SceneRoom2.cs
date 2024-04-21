@@ -53,7 +53,7 @@ namespace BreakoutC3172.ScenesFolder
             gameObjects.Add(new Board(new() { board }, new Vector2(15 * 32 / 2, 10 * 32), 1));
 
             float radius = 11f;
-            Vector2 direction = UtilityFunctions.ConvertRadiansToUnitVector((float)(Globals.RandomGenerator.NextDouble() * (Math.PI * 2)));
+            Vector2 direction = UtilityFunctions.ConvertRadiansToHeadingVector((float)(Globals.RandomGenerator.NextDouble() * (Math.PI * 2)));
             float speed = 300f;
             gameObjects.Add(new Ball(new() { ball }, new(400, 450), 1, radius, direction, speed));
 

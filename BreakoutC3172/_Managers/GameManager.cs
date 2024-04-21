@@ -16,16 +16,17 @@ namespace BreakoutC3172
         {
             _game = game;
             _sceneManager = new(this);
-            _pauseManager = new(_sceneManager);
+            _pauseManager = new(_sceneManager, _game);
 
             #region DEBUG TESTING
 
             var radians = (float)Math.PI;
-            var unitVec = UtilityFunctions.ConvertRadiansToUnitVector(radians);
-            var radians2 = UtilityFunctions.ConvertUnitVectorToRadians(unitVec);
+            var unitVec = UtilityFunctions.ConvertRadiansToHeadingVector(radians);
+            var radians2 = UtilityFunctions.ConvertHeadingVectorToRadians(unitVec);
             Debug.WriteLine(radians);
             Debug.WriteLine(unitVec);
             Debug.WriteLine(radians2);
+
             //Debug.WriteLine(UtilityFunctions.IsPositive(2));
             //Debug.WriteLine(UtilityFunctions.IsPositive(-2));
 
@@ -38,7 +39,6 @@ namespace BreakoutC3172
             // Pause
             if (InputManager.KeyClicked(Keys.Escape)) { Globals.Paused = !Globals.Paused; }
 
-            _pauseManager.Update();
 
             // Fullscreen
             if (InputManager.KeyClicked(Keys.F5))
@@ -46,17 +46,11 @@ namespace BreakoutC3172
                 if (!Game1._graphics.IsFullScreen) { UtilityFunctions.SetWindowState(_game, UtilityFunctions.WindowState.FullScreen); }
                 else { UtilityFunctions.SetWindowState(_game, UtilityFunctions.WindowState.Windowed); }
             }
-            // Borderless
-            //if (InputManager.KeyClicked(Keys.F6))
-            //{
-            //    if (!_game.Window.IsBorderless) { UtilityFunctions.SetWindowState(_game, UtilityFunctions.WindowState.Borderless); }
-            //    else { UtilityFunctions.SetWindowState(_game, UtilityFunctions.WindowState.Windowed); }
-            //}
-
             // Toggle Size
             if (InputManager.KeyClicked(Keys.F8)) { UtilityFunctions.ToggleScreenScale(_game); }
 
             if (InputManager.KeyClicked(Keys.H)) { Globals.IsDrawingOutline = !Globals.IsDrawingOutline; }
+
 
 
             if (!Globals.Paused)
@@ -65,9 +59,17 @@ namespace BreakoutC3172
                 if (InputManager.KeyClicked(Keys.F1)) { _sceneManager.SwitchScene(Scenes.SceneMenu1); }
                 if (InputManager.KeyClicked(Keys.F2)) { _sceneManager.SwitchScene(Scenes.SceneRoom1); }
                 if (InputManager.KeyClicked(Keys.F3)) { _sceneManager.SwitchScene(Scenes.SceneRoom2); }
+                if (InputManager.KeyClicked(Keys.F4)) { _sceneManager.SwitchScene(Scenes.SceneRoom3); }
 
                 // Update Current Scene
                 _sceneManager.Update();
+            }
+
+            // Need this after updating the SceneManager
+            // Otherwise we can get the "click main menu -> instantly click exit game"
+            if (Globals.Paused)
+            {
+                _pauseManager.Update();
             }
 
         }

@@ -2,7 +2,7 @@
 
 namespace BreakoutC3172.Objects
 {
-    internal class GameObject
+    public class GameObject
     {
 
         protected List<Texture2D> textures;

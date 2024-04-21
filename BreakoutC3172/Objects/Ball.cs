@@ -81,23 +81,28 @@ namespace BreakoutC3172.Objects
             int height = Globals.WindowSize.Y;
 
             Vector2 nextPosition = Position + velocity;
+            float clampDelta = 0.2f;
+            var colRandomMax = 0.3f;
 
             if (nextPosition.X < 0f + radius) // Collide with left wall
             {
                 nextPosition.X = 0f + radius + 1;
 
                 // Flip the direction and change it a little randomly
-                var radians = UtilityFunctions.ConvertUnitVectorToRadians(direction);
-                radians = radians + (float)Math.PI;
+                direction.X = -direction.X;
+                var radians = UtilityFunctions.ConvertHeadingVectorToRadians(direction);
                 if (UtilityFunctions.IsPositive(direction.Y))
                 {
-                    radians += (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+                    radians += (float)((Globals.RandomGenerator.NextDouble() * colRandomMax) - colRandomMax * 0.5f);
                 }
                 else
                 {
-                    radians -= (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+                    radians += (float)((Globals.RandomGenerator.NextDouble() * colRandomMax) - colRandomMax * 0.5f);
                 }
-                direction = UtilityFunctions.ConvertRadiansToUnitVector(radians);
+                // Clamp
+                radians = Math.Clamp(radians, (float)(-Math.PI / 2) + clampDelta, (float)(Math.PI / 2) - clampDelta);
+
+                direction = UtilityFunctions.ConvertRadiansToHeadingVector(radians);
 
                 NewRotationSpeed();
             }
@@ -106,17 +111,27 @@ namespace BreakoutC3172.Objects
                 nextPosition.X = width - 5 * 32 - radius - 1;
 
                 // Flip the direction and change it a little randomly
-                var radians = UtilityFunctions.ConvertUnitVectorToRadians(direction);
-                radians = radians + (float)Math.PI;
+                direction.X = -direction.X;
+                var radians = UtilityFunctions.ConvertHeadingVectorToRadians(direction);
+
                 if (UtilityFunctions.IsPositive(direction.Y))
                 {
-                    radians -= (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+                    radians += (float)((Globals.RandomGenerator.NextDouble() * colRandomMax) - colRandomMax * 0.5f);
                 }
                 else
                 {
-                    radians += (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+                    radians += (float)((Globals.RandomGenerator.NextDouble() * colRandomMax) - colRandomMax * 0.5f);
                 }
-                direction = UtilityFunctions.ConvertRadiansToUnitVector(radians);
+                // Move Radians to PI to -PI Range
+                MathHelper.WrapAngle(radians);
+
+                // Clamp
+                var max = (Math.PI / 2) + clampDelta;
+                var min = (-Math.PI / 2) - clampDelta;
+                if (radians < max && radians > 0) { radians = (float)max; }
+                if (radians > min && radians < 0) { radians = (float)min; }
+
+                direction = UtilityFunctions.ConvertRadiansToHeadingVector(radians);
 
                 NewRotationSpeed();
             }
@@ -126,17 +141,20 @@ namespace BreakoutC3172.Objects
                 nextPosition.Y = 0f + radius + 1;
 
                 // Flip the direction and change it a little randomly
-                //direction.Y = -direction.Y;
-                var radians = UtilityFunctions.ConvertUnitVectorToRadians(direction);
+                direction.Y = -direction.Y;
+                var radians = UtilityFunctions.ConvertHeadingVectorToRadians(direction);
                 if (UtilityFunctions.IsPositive(direction.X))
                 {
-                    radians -= (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+                    radians += (float)((Globals.RandomGenerator.NextDouble() * colRandomMax) - colRandomMax * 0.5f);
                 }
                 else
                 {
-                    radians += (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+                    radians += (float)((Globals.RandomGenerator.NextDouble() * colRandomMax) - colRandomMax * 0.5f);
                 }
-                direction = UtilityFunctions.ConvertRadiansToUnitVector(radians);
+                // Clamp
+                radians = Math.Clamp(radians, (float)(-Math.PI) + clampDelta, (float)(0) - clampDelta);
+
+                direction = UtilityFunctions.ConvertRadiansToHeadingVector(radians);
 
                 NewRotationSpeed();
             }
@@ -145,18 +163,19 @@ namespace BreakoutC3172.Objects
                 nextPosition.Y = height - radius - 1;
 
                 // Flip the direction and change it a little randomly
-                //direction.Y = -direction.Y;
-                var radians = UtilityFunctions.ConvertUnitVectorToRadians(direction);
+                direction.Y = -direction.Y;
+                var radians = UtilityFunctions.ConvertHeadingVectorToRadians(direction);
                 if (UtilityFunctions.IsPositive(direction.X))
                 {
-                    radians += (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+                    radians += (float)(Globals.RandomGenerator.NextDouble() * colRandomMax);
                 }
                 else
                 {
-                    radians -= (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+                    radians -= (float)(Globals.RandomGenerator.NextDouble() * colRandomMax);
                 }
-                Debug.WriteLine("d2: " + UtilityFunctions.RadiansToDegrees(radians));
-                direction = UtilityFunctions.ConvertRadiansToUnitVector(radians);
+                radians = Math.Clamp(radians, (float)(0) + clampDelta, (float)(Math.PI) - clampDelta);
+
+                direction = UtilityFunctions.ConvertRadiansToHeadingVector(radians);
 
                 NewRotationSpeed();
             }
@@ -170,7 +189,7 @@ namespace BreakoutC3172.Objects
                     var colObjRectangle = gameObjects[i].Rectangle;
                     var currentRectangle = Rectangle;
 
-                    int d = 8; // I added a delta here to make the lines smaller, so no collision should be with both lines at the same time
+                    int d = 6; // I added a delta here to make the lines smaller, so no collision should be with both lines at the same time
                     Rectangle colObjLineTop = new(colObjRectangle.X + d, colObjRectangle.Y, colObjRectangle.Width - d * 2, 0);
                     Rectangle colObjLineBot = new(colObjRectangle.X + d, colObjRectangle.Bottom, colObjRectangle.Width - d * 2, 0);
                     Rectangle colObjLineLeft = new(colObjRectangle.X, colObjRectangle.Y + d, 0, colObjRectangle.Height - d * 2);
@@ -183,33 +202,85 @@ namespace BreakoutC3172.Objects
 
                     if (intersectLineLeft || intersectLineRight || intersectLineTop || intersectLineBot)
                     {
-                        if (currentRectangle.Intersects(colObjLineLeft))
-                        {
-                            direction.X = -direction.X;
-                            nextPosition.X = colObjRectangle.X - radius - 1;
-                        }
-                        else if (currentRectangle.Intersects(colObjLineRight))
-                        {
-                            direction.X = -direction.X;
-                            nextPosition.X = colObjRectangle.X + colObjRectangle.Width + radius + 1;
-                        }
-                        else if (currentRectangle.Intersects(colObjLineTop))
-                        {
-                            direction.Y = -direction.Y;
-                            nextPosition.Y = colObjRectangle.Y - radius - 1;
-                        }
-                        else if (currentRectangle.Intersects(colObjLineBot))
-                        {
-                            direction.Y = -direction.Y;
-                            nextPosition.Y = colObjRectangle.Y + colObjRectangle.Height + radius + 1;
-                        }
 
-
-                        if (gameObjects[i] is BlockObject)
+                        if (gameObjects[i] is Board)
                         {
-                            if (gameObjects[i].UpdateHP(-1))
+                            Board board = (Board)gameObjects[i];
+
+                            if (currentRectangle.Intersects(colObjLineLeft))
                             {
-                                indicesToRemove.Add(i);
+                                direction.X = -direction.X;
+                                nextPosition.X = colObjRectangle.X - radius - 1;
+                                nextPosition.X += board.velocity.X; // Push the ball in the direction the board is moving this frame
+                            }
+                            else if (currentRectangle.Intersects(colObjLineRight))
+                            {
+                                direction.X = -direction.X;
+                                nextPosition.X = colObjRectangle.X + colObjRectangle.Width + radius + 1;
+                                nextPosition.X += board.velocity.X; // Push the ball in the direction the board is moving this frame
+                            }
+                            else if (currentRectangle.Intersects(colObjLineTop))
+                            {
+                                // Basically i want to move the direction vector left the more left the board is going
+                                // and right the more right the board is going
+                                // clamp to 170-10 degrees
+                                // if no movement in board just bounce normal
+                                // max board speed should move the direction 90 degrees = PI/2?
+
+                                direction.Y = -direction.Y;
+
+                                var radiansToShift = (float)((board.velocity.X / board.maxSpeed) * (Math.PI / 2) * -0.5f);
+                                var oldDirRadians = UtilityFunctions.ConvertHeadingVectorToRadians(direction);
+                                Debug.WriteLine("radiansToShift: " + radiansToShift);
+                                Debug.WriteLine("oldDirRadians: " + oldDirRadians);
+                                var finalRadians = MathHelper.Clamp(oldDirRadians + radiansToShift, 0.2f, (float)(Math.PI) - 0.2f);
+                                Debug.WriteLine("finalRadians: " + finalRadians);
+                                var newDirection = UtilityFunctions.ConvertRadiansToHeadingVector(finalRadians);
+                                Debug.WriteLine("newDirectionX: " + newDirection.X);
+                                Debug.WriteLine("newDirectionY: " + newDirection.Y);
+
+                                direction = newDirection;
+
+                                // Set position to top of board
+                                nextPosition.Y = colObjRectangle.Y - radius - 1;
+
+                            }
+                            else if (currentRectangle.Intersects(colObjLineBot))
+                            {
+                                direction.Y = -direction.Y;
+                                nextPosition.Y = colObjRectangle.Y + colObjRectangle.Height + radius + 1;
+                            }
+
+                        }
+                        else
+                        {
+                            if (currentRectangle.Intersects(colObjLineLeft))
+                            {
+                                direction.X = -direction.X;
+                                nextPosition.X = colObjRectangle.X - radius - 1;
+                            }
+                            else if (currentRectangle.Intersects(colObjLineRight))
+                            {
+                                direction.X = -direction.X;
+                                nextPosition.X = colObjRectangle.X + colObjRectangle.Width + radius + 1;
+                            }
+                            else if (currentRectangle.Intersects(colObjLineTop))
+                            {
+                                direction.Y = -direction.Y;
+                                nextPosition.Y = colObjRectangle.Y - radius - 1;
+                            }
+                            else if (currentRectangle.Intersects(colObjLineBot))
+                            {
+                                direction.Y = -direction.Y;
+                                nextPosition.Y = colObjRectangle.Y + colObjRectangle.Height + radius + 1;
+                            }
+
+                            if (gameObjects[i] is BlockObject)
+                            {
+                                if (gameObjects[i].UpdateHP(-1))
+                                {
+                                    indicesToRemove.Add(i);
+                                }
                             }
                         }
 
@@ -223,23 +294,37 @@ namespace BreakoutC3172.Objects
 
         }
 
-        private static Vector2 UpdateDirectionColLeft(Vector2 startDir)
-        {
-            // Flip the direction and change it a little randomly
-            startDir.X = -startDir.X;
-            var radians = UtilityFunctions.ConvertUnitVectorToRadians(startDir);
+        //private static Vector2 UpdateDirectionColLeft(Vector2 startDir)
+        //{
+        //    // Flip the direction and change it a little randomly
+        //    startDir.X = -startDir.X;
+        //    var radians = UtilityFunctions.ConvertHeadingVectorToRadians(startDir);
 
-            //radians = radians + (float)Math.PI;
-            if (UtilityFunctions.IsPositive(startDir.Y))
-            {
-                radians += (float)(Globals.RandomGenerator.NextDouble() * 0.4);
-            }
-            else
-            {
-                radians -= (float)(Globals.RandomGenerator.NextDouble() * 0.4);
-            }
-            var endDir = UtilityFunctions.ConvertRadiansToUnitVector(radians);
-            return endDir;
+        //    //radians = radians + (float)Math.PI;
+        //    if (UtilityFunctions.IsPositive(startDir.Y))
+        //    {
+        //        radians += (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+        //    }
+        //    else
+        //    {
+        //        radians -= (float)(Globals.RandomGenerator.NextDouble() * 0.4);
+        //    }
+        //    var endDir = UtilityFunctions.ConvertRadiansToHeadingVector(radians);
+        //    return endDir;
+        //}
+
+        // Function to clamp a directional vector to be between 170 and 10 degrees
+        public static Vector2 ClampDirection(Vector2 direction)
+        {
+            // Convert direction to angle in radians
+            float angle = (float)Math.Atan2(direction.Y, direction.X);
+
+            // Clamp angle between 170 and 10 degrees
+            float clampedAngle = MathHelper.Clamp(angle, MathHelper.ToRadians(170), MathHelper.ToRadians(10));
+
+            // Convert clamped angle back to vector
+            return new Vector2((float)Math.Cos(clampedAngle), (float)Math.Sin(clampedAngle));
         }
+
     }
 }

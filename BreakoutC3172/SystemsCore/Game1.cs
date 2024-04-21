@@ -5,6 +5,7 @@ namespace BreakoutC3172.SystemsCore
         public static GraphicsDeviceManager _graphics;
         private GameManager _gameManager;
 
+        //private Texture2D windowIcon;
 
         public Game1()
         {
@@ -15,6 +16,7 @@ namespace BreakoutC3172.SystemsCore
 
         protected override void Initialize()
         {
+            Window.Title = "Clone 63";
 
             // When the game starts i set "_gameScalePrefered" to be as big whole number as possible
             // without being the same size or bigger than the monitor
@@ -43,8 +45,12 @@ namespace BreakoutC3172.SystemsCore
             Globals.Content = Content;
             Globals.GraphicsDevice = GraphicsDevice;
             Globals.SpriteBatch = new SpriteBatch(GraphicsDevice);
-
             Globals.Load();
+
+            //windowIcon = Globals.Content.Load<Texture2D>("ball_icon");
+
+
+            //Window. = windowIcon;
 
             _gameManager = new(this);
         }
