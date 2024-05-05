@@ -1,5 +1,6 @@
 ﻿using BreakoutC3172.SystemsCore;
 using BreakoutC3172.UI;
+using Microsoft.Xna.Framework.Audio;
 
 namespace BreakoutC3172.ScenesFolder
 {
@@ -8,6 +9,8 @@ namespace BreakoutC3172.ScenesFolder
 
         private Texture2D bg;
         private UIManager UIManager;
+
+        private SoundEffect effect;
 
         public SceneMenu1(GameManager gameManager, SceneManager sceneManager) : base(gameManager, sceneManager)
         {
@@ -19,6 +22,7 @@ namespace BreakoutC3172.ScenesFolder
             base.Load();
 
             bg = Globals.Content.Load<Texture2D>("Backgrounds/bg_arena_1");
+            effect = Globals.Content.Load<SoundEffect>("Audio/SoundEffects/so_sfx_sweep");
 
         }
 
@@ -42,6 +46,9 @@ namespace BreakoutC3172.ScenesFolder
 
             button = UIManager.AddButton(new(Globals.WindowSize.X / 2, Globals.WindowSize.Y * 0.8f), "Exit Game", 1, w, h);
             button.OnClick += ActionExit;
+
+            effect.Play();
+
         }
 
         public override void Update()

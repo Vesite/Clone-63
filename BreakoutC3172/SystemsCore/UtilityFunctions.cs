@@ -1,4 +1,6 @@
-﻿namespace BreakoutC3172.SystemsCore
+﻿using Microsoft.Xna.Framework.Audio;
+
+namespace BreakoutC3172.SystemsCore
 {
     internal class UtilityFunctions
     {
@@ -182,6 +184,12 @@
         public static float RadiansToDegrees(float radians)
         {
             return radians * (180f / (float)Math.PI);
+        }
+
+        public static void PlaySoundArray(SoundEffect[] soundsArray, float volume, float pitch = 0f, float pan = 0f)
+        {
+            int index = Globals.RandomGenerator.Next(0, soundsArray.Length); // Generate a random index
+            soundsArray[index].Play(volume, pitch, pan);
         }
 
     }

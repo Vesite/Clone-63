@@ -43,6 +43,7 @@ namespace BreakoutC3172.Objects
 
             if (hp <= 0)
             {
+                hp = 0;
                 // Kill this instance
                 return true;
             }

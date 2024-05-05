@@ -7,10 +7,10 @@ namespace BreakoutC3172
 {
     public class GameManager
     {
+        private readonly Game _game;
 
         private readonly SceneManager _sceneManager;
         private PauseManager _pauseManager;
-        private readonly Game _game;
 
         public GameManager(Game game)
         {
@@ -38,7 +38,6 @@ namespace BreakoutC3172
 
             // Pause
             if (InputManager.KeyClicked(Keys.Escape)) { Globals.Paused = !Globals.Paused; }
-
 
             // Fullscreen
             if (InputManager.KeyClicked(Keys.F5))

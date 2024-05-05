@@ -1,5 +1,6 @@
 ﻿using BreakoutC3172.Objects.Blocks;
 using BreakoutC3172.SystemsCore;
+using Microsoft.Xna.Framework.Audio;
 using System.Diagnostics;
 
 namespace BreakoutC3172.Objects
@@ -23,6 +24,8 @@ namespace BreakoutC3172.Objects
 
         private Random random = new();
 
+        private SoundEffect[] soundsBounce = new SoundEffect[3];
+
         public Ball(List<Texture2D> textures, Vector2 position, float scale, float radius, Vector2 direction, float speed)
              : base(textures, position, scale)
         {
@@ -34,6 +37,10 @@ namespace BreakoutC3172.Objects
             NewRotationSpeed();
 
             UIFont = Globals.Content.Load<SpriteFont>("ui_font");
+            // Load the sound effects in your LoadContent method or wherever appropriate
+            soundsBounce[0] = Globals.Content.Load<SoundEffect>("Audio/SoundEffects/so_sfx_punch_light_1");
+            soundsBounce[1] = Globals.Content.Load<SoundEffect>("Audio/SoundEffects/so_sfx_punch_light_2");
+            soundsBounce[2] = Globals.Content.Load<SoundEffect>("Audio/SoundEffects/so_sfx_punch_light_3");
 
         }
 
@@ -86,6 +93,7 @@ namespace BreakoutC3172.Objects
 
             if (nextPosition.X < 0f + radius) // Collide with left wall
             {
+                UtilityFunctions.PlaySoundArray(soundsBounce, 1);
                 nextPosition.X = 0f + radius + 1;
 
                 // Flip the direction and change it a little randomly
@@ -108,6 +116,7 @@ namespace BreakoutC3172.Objects
             }
             else if (nextPosition.X > width - 5 * 32 - radius) // Collide with right wall
             {
+                UtilityFunctions.PlaySoundArray(soundsBounce, 1);
                 nextPosition.X = width - 5 * 32 - radius - 1;
 
                 // Flip the direction and change it a little randomly
@@ -138,6 +147,7 @@ namespace BreakoutC3172.Objects
 
             if (nextPosition.Y < 0f + radius) // Collide with top wall
             {
+                UtilityFunctions.PlaySoundArray(soundsBounce, 1);
                 nextPosition.Y = 0f + radius + 1;
 
                 // Flip the direction and change it a little randomly
@@ -160,6 +170,7 @@ namespace BreakoutC3172.Objects
             }
             else if (nextPosition.Y > height - radius) // Collide with bottom wall
             {
+                UtilityFunctions.PlaySoundArray(soundsBounce, 1);
                 nextPosition.Y = height - radius - 1;
 
                 // Flip the direction and change it a little randomly
@@ -202,6 +213,7 @@ namespace BreakoutC3172.Objects
 
                     if (intersectLineLeft || intersectLineRight || intersectLineTop || intersectLineBot)
                     {
+                        UtilityFunctions.PlaySoundArray(soundsBounce, 1);
 
                         if (gameObjects[i] is Board)
                         {
@@ -293,25 +305,6 @@ namespace BreakoutC3172.Objects
             Position = nextPosition;
 
         }
-
-        //private static Vector2 UpdateDirectionColLeft(Vector2 startDir)
-        //{
-        //    // Flip the direction and change it a little randomly
-        //    startDir.X = -startDir.X;
-        //    var radians = UtilityFunctions.ConvertHeadingVectorToRadians(startDir);
-
-        //    //radians = radians + (float)Math.PI;
-        //    if (UtilityFunctions.IsPositive(startDir.Y))
-        //    {
-        //        radians += (float)(Globals.RandomGenerator.NextDouble() * 0.4);
-        //    }
-        //    else
-        //    {
-        //        radians -= (float)(Globals.RandomGenerator.NextDouble() * 0.4);
-        //    }
-        //    var endDir = UtilityFunctions.ConvertRadiansToHeadingVector(radians);
-        //    return endDir;
-        //}
 
         // Function to clamp a directional vector to be between 170 and 10 degrees
         public static Vector2 ClampDirection(Vector2 direction)

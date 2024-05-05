@@ -5,8 +5,6 @@ namespace BreakoutC3172.SystemsCore
         public static GraphicsDeviceManager _graphics;
         private GameManager _gameManager;
 
-        //private Texture2D windowIcon;
-
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -46,11 +44,6 @@ namespace BreakoutC3172.SystemsCore
             Globals.GraphicsDevice = GraphicsDevice;
             Globals.SpriteBatch = new SpriteBatch(GraphicsDevice);
             Globals.Load();
-
-            //windowIcon = Globals.Content.Load<Texture2D>("ball_icon");
-
-
-            //Window. = windowIcon;
 
             _gameManager = new(this);
         }

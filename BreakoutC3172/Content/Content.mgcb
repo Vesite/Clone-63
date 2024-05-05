@@ -13,6 +13,216 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Audio/Ambiance/so_am_dream.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Ambiance/so_am_dream.ogg
+
+#begin Audio/Ambiance/so_am_forest_1.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Ambiance/so_am_forest_1.ogg
+
+#begin Audio/Ambiance/so_am_rain_normal_1.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Ambiance/so_am_rain_normal_1.ogg
+
+#begin Audio/Ambiance/so_am_rain_normal_2.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Ambiance/so_am_rain_normal_2.ogg
+
+#begin Audio/Ambiance/so_am_rain_normal_3.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Ambiance/so_am_rain_normal_3.ogg
+
+#begin Audio/Ambiance/so_am_rain_roof_1.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Ambiance/so_am_rain_roof_1.ogg
+
+#begin Audio/Ambiance/so_am_rain_roof_2.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Ambiance/so_am_rain_roof_2.ogg
+
+#begin Audio/Ambiance/so_am_rain_roof_3.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Ambiance/so_am_rain_roof_3.ogg
+
+#begin Audio/Ambiance/so_am_rain_roof_4.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Ambiance/so_am_rain_roof_4.ogg
+
+#begin Audio/Music/so_mu_harp.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/so_mu_harp.ogg
+
+#begin Audio/Music/so_mu_loading.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/so_mu_loading.ogg
+
+#begin Audio/SoundEffects/so_sfx_alien_idle_1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_alien_idle_1.wav
+
+#begin Audio/SoundEffects/so_sfx_alien_idle_2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_alien_idle_2.wav
+
+#begin Audio/SoundEffects/so_sfx_alien_idle_3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_alien_idle_3.wav
+
+#begin Audio/SoundEffects/so_sfx_explosion_retro_1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_explosion_retro_1.wav
+
+#begin Audio/SoundEffects/so_sfx_explosion_retro_2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_explosion_retro_2.wav
+
+#begin Audio/SoundEffects/so_sfx_lightn_1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_lightn_1.wav
+
+#begin Audio/SoundEffects/so_sfx_lightn_2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_lightn_2.wav
+
+#begin Audio/SoundEffects/so_sfx_lightn_3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_lightn_3.wav
+
+#begin Audio/SoundEffects/so_sfx_lightn_4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_lightn_4.wav
+
+#begin Audio/SoundEffects/so_sfx_lightn_new_1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_lightn_new_1.wav
+
+#begin Audio/SoundEffects/so_sfx_lightn_new_2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_lightn_new_2.wav
+
+#begin Audio/SoundEffects/so_sfx_lightn_new_3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_lightn_new_3.wav
+
+#begin Audio/SoundEffects/so_sfx_lightn_new_4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_lightn_new_4.wav
+
+#begin Audio/SoundEffects/so_sfx_punch_1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_punch_1.wav
+
+#begin Audio/SoundEffects/so_sfx_punch_2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_punch_2.wav
+
+#begin Audio/SoundEffects/so_sfx_punch_3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_punch_3.wav
+
+#begin Audio/SoundEffects/so_sfx_punch_light_1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_punch_light_1.wav
+
+#begin Audio/SoundEffects/so_sfx_punch_light_2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_punch_light_2.wav
+
+#begin Audio/SoundEffects/so_sfx_punch_light_3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_punch_light_3.wav
+
+#begin Audio/SoundEffects/so_sfx_sweep.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_sweep.wav
+
+#begin Audio/SoundEffects/so_sfx_tap_1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_tap_1.wav
+
+#begin Audio/SoundEffects/so_sfx_tap_2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_tap_2.wav
+
+#begin Audio/SoundEffects/so_sfx_tap_3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_tap_3.wav
+
+#begin Audio/SoundEffects/so_sfx_tap_back.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SoundEffects/so_sfx_tap_back.wav
+
 #begin Backgrounds/bg_arena_1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -312,6 +522,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:button_c4_pressed.png
+
+#begin lightn_anim_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:lightn_anim_1.png
 
 #begin ui_font.spritefont
 /importer:FontDescriptionImporter

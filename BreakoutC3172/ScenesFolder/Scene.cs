@@ -1,6 +1,7 @@
 ﻿using BreakoutC3172.Objects;
 using BreakoutC3172.Objects.Blocks;
 using BreakoutC3172.SystemsCore;
+using System.Diagnostics;
 
 namespace BreakoutC3172.ScenesFolder
 {
@@ -38,18 +39,38 @@ namespace BreakoutC3172.ScenesFolder
 
         public virtual void Update()
         {
-            // Update all objects
-            foreach (GameObject gameObject in gameObjects)
+            // Update all objects (in order so that i can add new objects to the list during the loop)
+            for (int i = 0; i < gameObjects.Count; i++)
             {
+                GameObject gameObject = gameObjects[i];
                 gameObject.Update(gameObjects, indicesToRemove);
             }
 
+            // Remove duplicates from indicesToRemove
+            HashSet<int> uniqueIndices = new HashSet<int>(indicesToRemove);
+            indicesToRemove.Clear();
+            indicesToRemove.AddRange(uniqueIndices);
+
+            // Sort the indices in ascending order
+            indicesToRemove.Sort();
+
             // Remove marked objects
-            foreach (int index in indicesToRemove)
+            for (int i = indicesToRemove.Count - 1; i >= 0; i--)
             {
-                gameObjects.RemoveAt(index);
+                int index = indicesToRemove[i];
+                if (index >= 0 && index < gameObjects.Count)
+                {
+                    gameObjects.RemoveAt(index);
+                }
+                else
+                {
+                    // Error? Should never happen
+                    Debug.WriteLine("Error, sould never happen (indicesToRemove invelid)");
+                }
             }
             indicesToRemove.Clear();
+
+            //Debug.WriteLine("Object Count: " + gameObjects.Count);
         }
 
         protected virtual void Draw()
